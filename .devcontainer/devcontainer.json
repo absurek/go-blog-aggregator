@@ -1,0 +1,20 @@
+{
+  "name": "Blog Aggregator in Go",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [5432, 5433],
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "go.toolsManagement.autoUpdate": true
+      },
+      "extensions": [
+        "golang.go"
+      ]
+    }
+  },
+  "postCreateCommand": "go version"
+}
