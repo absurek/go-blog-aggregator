@@ -14,7 +14,7 @@ func ResetHandler(app *application.Application, cmd cli.Command) error {
 		return fmt.Errorf("db delete all users: %w", err)
 	}
 
-	fmt.Println("Users table reset!")
+	fmt.Println("Reset done!")
 
 	return nil
 }

@@ -22,6 +22,9 @@ func main() {
 	app.RegisterCommand("register", cmd.RegisterHandler)
 	app.RegisterCommand("reset", cmd.ResetHandler)
 	app.RegisterCommand("users", cmd.UsersHandler)
+	app.RegisterCommand("agg", cmd.AggHandler)
+	app.RegisterCommand("addfeed", cmd.AddfeedHandler)
+	app.RegisterCommand("feeds", cmd.FeedsHandler)
 
 	cmd, err := cli.ParseCommand(os.Args)
 	if err != nil {
