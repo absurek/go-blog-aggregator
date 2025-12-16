@@ -5,8 +5,8 @@ import (
 )
 
 type Command struct {
-	name string
-	args []string
+	Name string
+	Args []string
 }
 
 func ParseCommand(rawArgs []string) (*Command, error) {
@@ -15,11 +15,11 @@ func ParseCommand(rawArgs []string) (*Command, error) {
 	}
 
 	return &Command{
-		name: rawArgs[1],
-		args: rawArgs[2:],
+		Name: rawArgs[1],
+		Args: rawArgs[2:],
 	}, nil
 }
 
 func (c Command) String() string {
-	return c.name
+	return c.Name
 }

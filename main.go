@@ -6,20 +6,22 @@ import (
 
 	"github.com/absurek/go-blog-aggregator/internal/application"
 	"github.com/absurek/go-blog-aggregator/internal/cli"
-	"github.com/absurek/go-blog-aggregator/internal/config"
+	"github.com/absurek/go-blog-aggregator/internal/cmd"
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	cfg, err := config.Read()
+	app, err := application.NewApplication()
 	if err != nil {
-		fmt.Printf("Error: could not read config: %v\n", err)
+		fmt.Printf("ERROR: Application startup: %v\n", err)
 		os.Exit(1)
 	}
+	defer app.Close()
 
-	app := application.NewApplication(cfg)
-	commands := cli.NewCommands()
-
-	commands.Register("login", cli.LoginHandler)
+	app.RegisterCommand("login", cmd.LoginHandler)
+	app.RegisterCommand("register", cmd.RegisterHandler)
+	app.RegisterCommand("reset", cmd.ResetHandler)
+	app.RegisterCommand("users", cmd.UsersHandler)
 
 	cmd, err := cli.ParseCommand(os.Args)
 	if err != nil {
@@ -27,7 +29,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = commands.Run(app, *cmd)
+	err = app.Execute(*cmd)
 	if err != nil {
 		fmt.Printf("Error: command %s: %v\n", cmd, err)
 		os.Exit(1)

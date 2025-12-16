@@ -40,18 +40,18 @@ func write(config Config) error {
 func Read() (*Config, error) {
 	configPath, err := getConfigFilePath()
 	if err != nil {
-		return nil, fmt.Errorf("get config path: %w", err)
+		return nil, fmt.Errorf("get file path: %w", err)
 	}
 
 	dat, err := os.ReadFile(configPath)
 	if err != nil {
-		return nil, fmt.Errorf("read config at %s: %w", configPath, err)
+		return nil, fmt.Errorf("read file at %s: %w", configPath, err)
 	}
 
 	var config Config
 	err = json.Unmarshal(dat, &config)
 	if err != nil {
-		return nil, fmt.Errorf("unmarshal config at %s: %w", configPath, err)
+		return nil, fmt.Errorf("unmarshal contents at %s: %w", configPath, err)
 	}
 
 	return &config, nil

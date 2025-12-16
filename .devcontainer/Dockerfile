@@ -24,4 +24,5 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 # GO CLIs
 RUN go install github.com/bootdotdev/bootdev@latest && \
     go install github.com/pressly/goose/v3/cmd/goose@latest && \
+    go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest && \
     echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
