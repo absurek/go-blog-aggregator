@@ -4,7 +4,7 @@ VALUES ($1, $2, $3, $4, DEFAULT, DEFAULT)
 RETURNING *;
 
 -- name: GetFeeds :many
-SELECT f.name, f.url, u.name AS user_name
+SELECT f.id, f.name, f.url, u.name AS user_name
 FROM users u
 INNER JOIN feeds f ON f.user_id = u.id;
 
@@ -12,3 +12,13 @@ INNER JOIN feeds f ON f.user_id = u.id;
 SELECT id, user_id, name, url, created_at, updated_at
 FROM feeds
 WHERE url = $1;
+
+-- name: MarkFeedFetched :exec
+UPDATE feeds
+SET updated_at = CURRENT_TIMESTAMP, last_fetched_at = CURRENT_TIMESTAMP
+WHERE ID = $1;
+
+-- name: GetNextFeedToFetch :one
+SELECT * FROM feeds
+ORDER BY last_fetched_at NULLS FIRST
+LIMIT 1;

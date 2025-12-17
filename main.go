@@ -29,6 +29,7 @@ func main() {
 	app.RegisterCommand("follow", middleware.Authenticate(cmd.FollowHandler))
 	app.RegisterCommand("following", middleware.Authenticate(cmd.FollowingHandler))
 	app.RegisterCommand("unfollow", middleware.Authenticate(cmd.UnfollowHandler))
+	app.RegisterCommand("browse", middleware.Authenticate(cmd.BrowseHandler))
 
 	cmd, err := cli.ParseCommand(os.Args)
 	if err != nil {
