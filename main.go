@@ -7,6 +7,7 @@ import (
 	"github.com/absurek/go-blog-aggregator/internal/application"
 	"github.com/absurek/go-blog-aggregator/internal/cli"
 	"github.com/absurek/go-blog-aggregator/internal/cmd"
+	"github.com/absurek/go-blog-aggregator/internal/middleware"
 	_ "github.com/lib/pq"
 )
 
@@ -23,8 +24,11 @@ func main() {
 	app.RegisterCommand("reset", cmd.ResetHandler)
 	app.RegisterCommand("users", cmd.UsersHandler)
 	app.RegisterCommand("agg", cmd.AggHandler)
-	app.RegisterCommand("addfeed", cmd.AddfeedHandler)
+	app.RegisterCommand("addfeed", middleware.Authenticate(cmd.AddfeedHandler))
 	app.RegisterCommand("feeds", cmd.FeedsHandler)
+	app.RegisterCommand("follow", middleware.Authenticate(cmd.FollowHandler))
+	app.RegisterCommand("following", middleware.Authenticate(cmd.FollowingHandler))
+	app.RegisterCommand("unfollow", middleware.Authenticate(cmd.UnfollowHandler))
 
 	cmd, err := cli.ParseCommand(os.Args)
 	if err != nil {

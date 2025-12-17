@@ -10,12 +10,13 @@ import (
 )
 
 type HandlerFunc func(*Application, cli.Command) error
+type AuthenticatedHandlerFunc func(*Application, cli.Command, database.User) error
 
 type Application struct {
 	Config    *config.Config
 	DBQueries *database.Queries
+	DB        *sql.DB
 
-	db         *sql.DB
 	handlerMap map[string]HandlerFunc
 }
 
@@ -35,7 +36,7 @@ func NewApplication() (*Application, error) {
 	return &Application{
 		Config:     cfg,
 		DBQueries:  dbQueries,
-		db:         db,
+		DB:         db,
 		handlerMap: make(map[string]HandlerFunc),
 	}, nil
 }
@@ -54,5 +55,5 @@ func (a *Application) RegisterCommand(name string, handler HandlerFunc) {
 }
 
 func (a *Application) Close() {
-	a.db.Close()
+	a.DB.Close()
 }

@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS feeds (
 );
 
 -- +goose Down
-DROP TABLE users;
+DROP TABLE feeds;

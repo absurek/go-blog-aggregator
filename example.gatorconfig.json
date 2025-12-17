@@ -1,0 +1,4 @@
+{
+  "db_url": "postgres://dev:dev@dev-db:5432/devdb?sslmode=disable", 
+  "current_user_name": "dev"
+}
